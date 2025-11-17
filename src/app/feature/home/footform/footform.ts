@@ -1,5 +1,5 @@
 
-import { Component, HostListener, inject, signal, WritableSignal } from '@angular/core';
+import { Component, HostListener, Inject, inject, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,  } from "@angular/forms";
 import { CookieService } from 'ngx-cookie-service';
 import { Auth } from '../../../core/service/auth/auth';
@@ -17,9 +17,17 @@ import { TreeNode } from 'primeng/api';
   styleUrl: './footform.css',
 })
 export class Footform {
-constructor(private flowbiteService: FlowbiteService) {
+// constructor(private flowbiteService: FlowbiteService) {
+//   this.subDropdownOpen.set(new Array(this.services.length).fill(false));
+// }
+
+constructor(
+  private flowbiteService: FlowbiteService,
+  @Inject(PLATFORM_ID) private platformId: Object
+) {
   this.subDropdownOpen.set(new Array(this.services.length).fill(false));
 }
+
 
  private readonly fb= inject(FormBuilder);
 private readonly auth=inject(Auth)
