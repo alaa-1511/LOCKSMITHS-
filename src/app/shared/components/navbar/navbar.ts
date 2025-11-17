@@ -11,38 +11,6 @@ import { isPlatformBrowser, NgClass, ViewportScroller } from '@angular/common';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-// constructor(private flowbiteService: FlowbiteService) {}
-//   isScrolled: WritableSignal<boolean> = signal(false);
-//   activeSection: WritableSignal<string> = signal('');
-
-//   private viewportScroller = inject(ViewportScroller);
-
-//   scrollTo(sectionId: string) {
-//     this.viewportScroller.scrollToAnchor(sectionId);
-//   }
-
-//   @HostListener('window:scroll', [])
-//   onWindowScroll() {
-//     this.isScrolled.set(window.scrollY > 50);
-
-//     const sections = document.querySelectorAll('section[id]');
-//     const scrollPosition = window.scrollY + 150;
-
-//     sections.forEach((section: any) => {
-//       if (
-//         section.offsetTop <= scrollPosition &&
-//         section.offsetTop + section.offsetHeight > scrollPosition
-//       ) {
-//         this.activeSection.set(section.id);
-//       }
-//     });
-//   }
-//   ngOnInit(): void {
-//     this.flowbiteService.loadFlowbite((flowbite) => {
-//       initFlowbite();
-//     });
-//   }
-
 constructor(
     private flowbiteService: FlowbiteService,
     @Inject(PLATFORM_ID) private platformId: Object
