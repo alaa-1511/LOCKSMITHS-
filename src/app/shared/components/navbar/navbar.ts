@@ -2,7 +2,7 @@ import { Component, HostListener, inject, signal, WritableSignal } from '@angula
 import { FlowbiteService } from '../../../core/service/service/flowbite-service';
 import { initFlowbite } from 'flowbite';
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { NgClass, ViewportScroller } from '@angular/common';
+import { isPlatformBrowser, NgClass, ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +11,45 @@ import { NgClass, ViewportScroller } from '@angular/common';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-constructor(private flowbiteService: FlowbiteService) {}
-  isScrolled: WritableSignal<boolean> = signal(false);
-  activeSection: WritableSignal<string> = signal(''); 
+// constructor(private flowbiteService: FlowbiteService) {}
+//   isScrolled: WritableSignal<boolean> = signal(false);
+//   activeSection: WritableSignal<string> = signal('');
 
+//   private viewportScroller = inject(ViewportScroller);
+
+//   scrollTo(sectionId: string) {
+//     this.viewportScroller.scrollToAnchor(sectionId);
+//   }
+
+//   @HostListener('window:scroll', [])
+//   onWindowScroll() {
+//     this.isScrolled.set(window.scrollY > 50);
+
+//     const sections = document.querySelectorAll('section[id]');
+//     const scrollPosition = window.scrollY + 150;
+
+//     sections.forEach((section: any) => {
+//       if (
+//         section.offsetTop <= scrollPosition &&
+//         section.offsetTop + section.offsetHeight > scrollPosition
+//       ) {
+//         this.activeSection.set(section.id);
+//       }
+//     });
+//   }
+//   ngOnInit(): void {
+//     this.flowbiteService.loadFlowbite((flowbite) => {
+//       initFlowbite();
+//     });
+//   }
+
+constructor(
+    private flowbiteService: FlowbiteService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  isScrolled: WritableSignal<boolean> = signal(false);
+  activeSection: WritableSignal<string> = signal('');
   private viewportScroller = inject(ViewportScroller);
 
   scrollTo(sectionId: string) {
@@ -23,6 +58,8 @@ constructor(private flowbiteService: FlowbiteService) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     this.isScrolled.set(window.scrollY > 50);
 
     const sections = document.querySelectorAll('section[id]');
@@ -37,9 +74,12 @@ constructor(private flowbiteService: FlowbiteService) {}
       }
     });
   }
+
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.flowbiteService.loadFlowbite(() => {
+        initFlowbite();
+      });
+    }
   }
 }
